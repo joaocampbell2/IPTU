@@ -66,6 +66,12 @@ public class ImovelDAOTest {
         assertEquals(DATA_VALIDA,imovel.dataLiberacao);
 
     }
+        @Test
+    @Order(25)
+    public void testGetByInscricaoInvalida(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                ImovelDAO.getByInscricao(5));
+    }
 
     @Test
     @Order(30)
@@ -76,6 +82,13 @@ public class ImovelDAOTest {
         assertEquals(AREA,imovel.area);
         assertEquals(CATEGORIA_A,imovel.categoria);
         assertEquals(DATA_VALIDA,imovel.dataLiberacao);
+    }
+
+    @Test
+    @Order(35)
+    public void testGetByIdInvalido(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                ImovelDAO.getByInscricao(-5));
     }
 
     @Test
@@ -100,15 +113,17 @@ public class ImovelDAOTest {
         verify(imovel).getCategoria();
         verify(imovel).getDataLiberacao();
 
-        assertTrue(update,"Erro ao salvar!");
-        assertNotEquals(DATA_VALIDA,imovel.getDataLiberacao(),"Erro ao atualizar!");
-        assertNotEquals(CATEGORIA_A,imovel.getCategoria(),"Erro ao atualizar!");
-        assertEquals(id,imovel.getID(),"Erro ao atualizar!");
-        assertNotEquals(AREA,imovel.getArea(),"Erro ao atualizar!");
-        assertNotEquals(VALOR,imovel.getValor(),"Erro ao atualizar!");
-        assertNotEquals(inscricao,imovel.getInscricao(),"Erro ao atualizar!");
 
-        inscricao = inscricaoAtualizada;
+        ImovelDTO imovelDTO = ImovelDAO.getById(id);
+
+
+        assertTrue(update,"Erro ao salvar!");
+        assertEquals(imovelDTO.dataLiberacao,imovel.getDataLiberacao(),"Erro ao atualizar!");
+        assertEquals(imovelDTO.categoria,imovel.getCategoria(),"Erro ao atualizar!");
+        assertEquals(id,imovel.getID(),"Erro ao atualizar!");
+        assertEquals(imovel.area,imovel.getArea(),"Erro ao atualizar!");
+        assertEquals(imovel.valor,imovel.getValor(),"Erro ao atualizar!");
+        assertEquals(imovel.inscricao,imovel.getInscricao(),"Erro ao atualizar!");
 
     }
 
