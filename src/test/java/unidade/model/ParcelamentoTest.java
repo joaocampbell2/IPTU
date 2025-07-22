@@ -30,13 +30,13 @@ class ParcelamentoTest {
     }
 
     @Test
-    void testParcelamento1000() {
+    void testParcelamento1000ComJuros() {
 
-        Parcelamento parcelamento = new Parcelamento(1000,0);
+        Parcelamento parcelamento = new Parcelamento(1000,5);
 
         assertEquals(5,parcelamento.getNumParcelas());
-        assertEquals(200,parcelamento.getValorParcela());
-        assertEquals(1000,parcelamento.getValorTotal());
+        assertEquals(204.11f,parcelamento.getValorParcela());
+        assertEquals(1020.55f,parcelamento.getValorTotal());
     }
 
     @Test

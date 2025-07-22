@@ -5,7 +5,10 @@ import main.model.Imovel;
 import main.model.ValorIPTU;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -34,9 +37,6 @@ class IPTUTest {
     static final float PER_JUROS_NEGATIVO = -1;
     static final float PER_JUROS =  10;
     static final char CATEGORIA_Z = 'Z';
-    static final char CATEGORIA_A = 'A';
-    static final char CATEGORIA_B = 'B';
-    static final char CATEGORIA_C = 'C';
     static final LocalDate DATA_170_ANOS = LocalDate.now().minusYears(170);
     static final LocalDate DATA_VALIDA = LocalDate.now().minusYears(1);
     static final float VALOR = 10000;
@@ -94,38 +94,33 @@ class IPTUTest {
         assertEquals(0,result.valor);
     }
 
-//    @Test
-//    void testCalculaValorCategoriaA(){
-//        when(imovel.getCategoria()).thenReturn(CATEGORIA_A);
-//        when(imovel.getDataLiberacao()).thenReturn(DATA_VALIDA);
-//        when(imovel.getValor()).thenReturn(VALOR);
-//        when(imovel.getArea()).thenReturn(AREA);
-//
-//        ValorIPTU result = iPTU.calculaValor(PER_DESCONTO,PER_JUROS);
-//
-//        float valorEsperado;
-//
-////        area = 20
-////        valor = 10000
-//
-//
-//
-//        assertEquals(valorEsperado,result.valor);
-//        assertEquals(valorEsperado,result.valorAVista);
-//        assertEquals(valorEsperado,result.parcelamento);
-//    }
+    @ParameterizedTest(name="Data: {0}  Valor: {1}  Area: {2}, Categoria: {3}, IPTU: {4}")
+    @CsvFileSource(resources="/dados_semIsencao.csv", delimiter=',')
+    @DisplayName("Teste do cálculo do IPTU - Unidade")
+    public void testCalcularIPTU(LocalDate data,float valor,int area, char categoria, float iptuEsperado) {
+        // Inicializacao
+        // Criação do objeto em teste e dos mocks via anotações
+
+        // Configuracao
+        when(imovel.getCategoria()).thenReturn(categoria);
+        when(imovel.getDataLiberacao()).thenReturn(data);
+        when(imovel.getValor()).thenReturn(valor);
+        when(imovel.getArea()).thenReturn(area);
+
+        // Acao
+
+        ValorIPTU r = iPTU.calculaValor(10,10);
 
 
+        // Verificacao
+        verify(imovel,atMost(4)).getCategoria();
+        verify(imovel).getDataLiberacao();
+        verify(imovel).getValor();
+        verify(imovel,times(2)).getArea();
 
-//    @Test
-//    void testCalculaValor() {
-//        when(imovel.getDataLiberacao()).thenReturn(LocalDate.of(2025, Month.JULY, 19));
-//        when(imovel.getValor()).thenReturn(0f);
-//        when(imovel.getArea()).thenReturn(0);
-//        when(imovel.getCategoria()).thenReturn('a');
-//
-//        ValorIPTU result = iPTU.calculaValor(0f, 0f);
-//        Assertions.assertEquals(new ValorIPTU(), result);
-//    }
+
+        assertEquals(iptuEsperado, r.valor, 0, "Erro no IPTU");
+
+    }
 }
 

@@ -2,7 +2,6 @@ package integracao.fase1;
 
 import main.dao.ImovelDAO;
 import main.db.DBConnection;
-import main.factory.ImovelFactory;
 import main.model.Imovel;
 import main.model.ImovelDTO;
 import org.junit.jupiter.api.*;
@@ -69,8 +68,12 @@ public class ImovelDAOTest {
         @Test
     @Order(25)
     public void testGetByInscricaoInvalida(){
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                ImovelDAO.getByInscricao(5));
+
+        ImovelDTO r = ImovelDAO.getByInscricao(5);
+
+        assertEquals(r.inscricao, 0 );
+        assertEquals(r.id, 0 );
+
     }
 
     @Test
@@ -87,8 +90,10 @@ public class ImovelDAOTest {
     @Test
     @Order(35)
     public void testGetByIdInvalido(){
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                ImovelDAO.getByInscricao(-5));
+        ImovelDTO r = ImovelDAO.getByInscricao(-5);
+
+        assertEquals(r.inscricao, 0 );
+        assertEquals(r.id, 0 );
     }
 
     @Test
@@ -114,16 +119,16 @@ public class ImovelDAOTest {
         verify(imovel).getDataLiberacao();
 
 
-        ImovelDTO imovelDTO = ImovelDAO.getById(id);
+        ImovelDTO imovelDTO = ImovelDAO.getByID(id);
 
 
         assertTrue(update,"Erro ao salvar!");
         assertEquals(imovelDTO.dataLiberacao,imovel.getDataLiberacao(),"Erro ao atualizar!");
         assertEquals(imovelDTO.categoria,imovel.getCategoria(),"Erro ao atualizar!");
         assertEquals(id,imovel.getID(),"Erro ao atualizar!");
-        assertEquals(imovel.area,imovel.getArea(),"Erro ao atualizar!");
-        assertEquals(imovel.valor,imovel.getValor(),"Erro ao atualizar!");
-        assertEquals(imovel.inscricao,imovel.getInscricao(),"Erro ao atualizar!");
+        assertEquals(imovelDTO.area,imovel.getArea(),"Erro ao atualizar!");
+        assertEquals(imovelDTO.valor,imovel.getValor(),"Erro ao atualizar!");
+        assertEquals(imovelDTO.inscricao,imovel.getInscricao(),"Erro ao atualizar!");
 
     }
 

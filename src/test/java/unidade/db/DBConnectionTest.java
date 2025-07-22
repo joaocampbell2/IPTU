@@ -56,17 +56,6 @@ class DBConnectionTest {
                 "Conexão com driver inválido");
     }
 
-//    @Test
-//    public void testFecharSemAbrir() {
-//        DBConnection.set(DRIVER,CONEXAO);
-//
-//        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-//                DBConnection.close()
-//        );
-//
-//        assertEquals("Conexão com BD não existe", exception.getMessage());
-//    }
-
     @Test
     public void testConexaoInvalida() {
         DBConnection.set(DRIVER,"ABC");
