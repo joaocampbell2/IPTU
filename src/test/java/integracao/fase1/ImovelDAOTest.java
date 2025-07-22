@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ImovelDAOTest {
+class ImovelDAOTest {
 
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String CONEXAO = "jdbc:sqlite:C:\\Users\\jpcam\\Downloads\\PTS - 2025.1 - Trabalho 4\\IPTU\\iptu.db";
@@ -26,13 +26,13 @@ public class ImovelDAOTest {
     private static int id;
 
     @BeforeAll
-    public static void setUp(){
+    static void setUp(){
         DBConnection.set(DRIVER, CONEXAO);
     }
 
     @Test
     @Order(10)
-    public void testInserirImovel(){
+    void testInserirImovel(){
         Imovel imovel = Mockito.mock(Imovel.class);
 
         inscricao = new Random().nextInt(10000000,99999999);
@@ -55,7 +55,7 @@ public class ImovelDAOTest {
     }
     @Test
     @Order(20)
-    public void testGetByInscricao(){
+    void testGetByInscricao(){
         ImovelDTO imovel = ImovelDAO.getByInscricao(inscricao);
 
         assertEquals(inscricao,imovel.inscricao);
@@ -65,20 +65,20 @@ public class ImovelDAOTest {
         assertEquals(DATA_VALIDA,imovel.dataLiberacao);
 
     }
-        @Test
+    @Test
     @Order(25)
-    public void testGetByInscricaoInvalida(){
+        void testGetByInscricaoInvalida(){
 
         ImovelDTO r = ImovelDAO.getByInscricao(5);
 
-        assertEquals(r.inscricao, 0 );
-        assertEquals(r.id, 0 );
+        assertEquals( 0 ,r.inscricao);
+        assertEquals( 0 ,r.id);
 
     }
 
     @Test
     @Order(30)
-    public void testGetByID(){
+    void testGetByID(){
         ImovelDTO imovel = ImovelDAO.getByID(id);
         assertEquals(inscricao,imovel.inscricao);
         assertEquals(VALOR,imovel.valor);
@@ -89,16 +89,16 @@ public class ImovelDAOTest {
 
     @Test
     @Order(35)
-    public void testGetByIdInvalido(){
+    void testGetByIdInvalido(){
         ImovelDTO r = ImovelDAO.getByInscricao(-5);
 
-        assertEquals(r.inscricao, 0 );
-        assertEquals(r.id, 0 );
+        assertEquals( 0,r.inscricao );
+        assertEquals( 0,r.id );
     }
 
     @Test
     @Order(40)
-    public void testUpdate(){
+    void testUpdate(){
         Imovel imovel = Mockito.mock(Imovel.class);
 
         int inscricaoAtualizada = new Random().nextInt(10000000,99999999);
@@ -134,7 +134,7 @@ public class ImovelDAOTest {
 
     @Test
     @Order(50)
-    public void testDelete(){
+    void testDelete(){
         Imovel imovel = Mockito.mock(Imovel.class);
 
         when(imovel.getID()).thenReturn(id);

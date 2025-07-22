@@ -3,33 +3,28 @@ package unidade.model;
 import main.model.IPTU;
 import main.model.Imovel;
 import main.model.ValorIPTU;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-
+@ExtendWith(MockitoExtension.class)
 class IPTUTest {
     @Mock
     Imovel imovel;
     @InjectMocks
     IPTU iPTU;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+
 
     static final float PER_DESCONTO_NEGATIVO =  -1;
     static final float PER_DESCONTO =  10;
@@ -97,7 +92,7 @@ class IPTUTest {
     @ParameterizedTest(name="Data: {0}  Valor: {1}  Area: {2}, Categoria: {3}, IPTU: {4}")
     @CsvFileSource(resources="/dados_semIsencao.csv", delimiter=',')
     @DisplayName("Teste do cálculo do IPTU - Unidade")
-    public void testCalcularIPTU(LocalDate data,float valor,int area, char categoria, float iptuEsperado) {
+    void testCalcularIPTU(LocalDate data,float valor,int area, char categoria, float iptuEsperado) {
         // Inicializacao
         // Criação do objeto em teste e dos mocks via anotações
 

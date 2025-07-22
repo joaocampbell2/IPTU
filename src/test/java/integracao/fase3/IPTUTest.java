@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IPTUTest {
+class IPTUTest {
 
     @ParameterizedTest(name="Data: {0}  Valor: {1}  Area: {2}, Categoria: {3}, IPTU: {4}")
     @CsvFileSource(resources="/dados.csv", delimiter=',')

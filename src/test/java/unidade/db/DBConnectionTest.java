@@ -2,35 +2,30 @@ package unidade.db;
 
 import main.db.DBConnection;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class DBConnectionTest {
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String CONEXAO = "jdbc:sqlite:C:\\Users\\jpcam\\Downloads\\PTS - 2025.1 - Trabalho 4\\IPTU\\iptu.db";
 
     @BeforeEach
-    public void preparaTest() {
+    void preparaTest() {
         DBConnection.set(null,null);
     }
 
     @AfterEach
-    public void finalizaTest() {
+    void finalizaTest() {
         if (DBConnection.isAlive())
             DBConnection.close();
     }
 
     @Test
-    public void testDriverIndefinido() {
+    void testDriverIndefinido() {
         DBConnection.set(null,CONEXAO);
 
         assertThrows(IllegalArgumentException.class,
@@ -39,7 +34,7 @@ class DBConnectionTest {
     }
 
     @Test
-    public void testConnectionStringIndefinida() {
+    void testConnectionStringIndefinida() {
         DBConnection.set(DRIVER,null);
 
         assertThrows(IllegalArgumentException.class,
@@ -48,7 +43,7 @@ class DBConnectionTest {
     }
 
     @Test
-    public void testDriverInvalido() {
+    void testDriverInvalido() {
         DBConnection.set("ABC",CONEXAO);
 
         assertThrows(IllegalArgumentException.class,
@@ -57,7 +52,7 @@ class DBConnectionTest {
     }
 
     @Test
-    public void testConexaoInvalida() {
+    void testConexaoInvalida() {
         DBConnection.set(DRIVER,"ABC");
 
         Connection conn = DBConnection.get();
@@ -66,7 +61,7 @@ class DBConnectionTest {
     }
 
     @Test
-    public void testConexaoValida() {
+    void testConexaoValida() {
         DBConnection.set(DRIVER,CONEXAO);
 
         Connection conn = DBConnection.get();

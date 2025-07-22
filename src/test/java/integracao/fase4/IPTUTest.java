@@ -11,20 +11,20 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IPTUTest {
+class IPTUTest {
 
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String CONEXAO = "jdbc:sqlite:C:\\Users\\jpcam\\Downloads\\PTS - 2025.1 - Trabalho 4\\IPTU\\iptu.db";
 
     @BeforeAll
-    public static void setUp(){
+    static void setUp(){
         DBConnection.set(DRIVER, CONEXAO);
     }
 
     @Test
     @DisplayName("Teste do cálculo do IPTU - Fase Final")
 
-    public void testIPTU(){
+    void testIPTU(){
         //1, 12345678, "20200507", 1500000, 500, "A"
         Imovel imovel = ImovelFactory.getByID(1);
 

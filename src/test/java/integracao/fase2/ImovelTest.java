@@ -12,7 +12,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ImovelTest {
+class ImovelTest {
 
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String CONEXAO = "jdbc:sqlite:C:\\Users\\jpcam\\Downloads\\PTS - 2025.1 - Trabalho 4\\IPTU\\iptu.db";
@@ -26,7 +26,7 @@ public class ImovelTest {
     private static Imovel imovel;
 
     @BeforeAll
-    public static void setUp(){
+    static void setUp(){
         DBConnection.set(DRIVER, CONEXAO);
     }
 
