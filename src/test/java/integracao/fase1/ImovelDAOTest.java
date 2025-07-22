@@ -13,6 +13,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ImovelDAOTest {
 
@@ -32,6 +33,7 @@ class ImovelDAOTest {
 
     @Test
     @Order(10)
+    @DisplayName("Testa a inserção de um imóvel")
     void testInserirImovel(){
         Imovel imovel = Mockito.mock(Imovel.class);
 
@@ -53,8 +55,10 @@ class ImovelDAOTest {
 
         assertNotEquals(0,id,"Erro ao salvar!");
     }
+
     @Test
     @Order(20)
+    @DisplayName("Testa a busca de imóvel por inscrição válida")
     void testGetByInscricao(){
         ImovelDTO imovel = ImovelDAO.getByInscricao(inscricao);
 
@@ -63,21 +67,21 @@ class ImovelDAOTest {
         assertEquals(AREA,imovel.area);
         assertEquals(CATEGORIA_A,imovel.categoria);
         assertEquals(DATA_VALIDA,imovel.dataLiberacao);
-
     }
+
     @Test
     @Order(25)
-        void testGetByInscricaoInvalida(){
-
+    @DisplayName("Testa a busca de imóvel por inscrição inválida")
+    void testGetByInscricaoInvalida(){
         ImovelDTO r = ImovelDAO.getByInscricao(5);
 
         assertEquals( 0 ,r.inscricao);
         assertEquals( 0 ,r.id);
-
     }
 
     @Test
     @Order(30)
+    @DisplayName("Testa a busca de imóvel por ID válido")
     void testGetByID(){
         ImovelDTO imovel = ImovelDAO.getByID(id);
         assertEquals(inscricao,imovel.inscricao);
@@ -89,6 +93,7 @@ class ImovelDAOTest {
 
     @Test
     @Order(35)
+    @DisplayName("Testa a busca de imóvel por ID inválido")
     void testGetByIdInvalido(){
         ImovelDTO r = ImovelDAO.getByInscricao(-5);
 
@@ -98,6 +103,7 @@ class ImovelDAOTest {
 
     @Test
     @Order(40)
+    @DisplayName("Testa a atualização de um imóvel")
     void testUpdate(){
         Imovel imovel = Mockito.mock(Imovel.class);
 
@@ -118,9 +124,7 @@ class ImovelDAOTest {
         verify(imovel).getCategoria();
         verify(imovel).getDataLiberacao();
 
-
         ImovelDTO imovelDTO = ImovelDAO.getByID(id);
-
 
         assertTrue(update,"Erro ao salvar!");
         assertEquals(imovelDTO.dataLiberacao,imovel.getDataLiberacao(),"Erro ao atualizar!");
@@ -129,11 +133,11 @@ class ImovelDAOTest {
         assertEquals(imovelDTO.area,imovel.getArea(),"Erro ao atualizar!");
         assertEquals(imovelDTO.valor,imovel.getValor(),"Erro ao atualizar!");
         assertEquals(imovelDTO.inscricao,imovel.getInscricao(),"Erro ao atualizar!");
-
     }
 
     @Test
     @Order(50)
+    @DisplayName("Testa a exclusão de um imóvel")
     void testDelete(){
         Imovel imovel = Mockito.mock(Imovel.class);
 
@@ -142,6 +146,5 @@ class ImovelDAOTest {
         boolean delete = ImovelDAO.delete(imovel);
 
         assertTrue(delete,"Erro ao deletar!");
-
     }
 }
